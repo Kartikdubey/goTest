@@ -1,0 +1,16 @@
+syntax="proto3";
+
+package GRPC.ClientServer;
+option go_package = "./;clientserver";
+
+message Person {
+      string name = 1;
+      string dob =2;
+      string salary=3;
+      int32 age = 4;
+      string filetype=5;
+}
+
+service serviceOne {
+      rpc SendData(Person) returns (Person) {}
+    }

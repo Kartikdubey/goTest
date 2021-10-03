@@ -5,14 +5,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 )
 
 type Person struct {
-	Name   string  `json:"name"`
-	Dob    string  `json:"dob"`
-	Salary float64 `json:"salary"`
-	Age    int     `json:"age"`
+	Name   string `json:"name"`
+	Dob    string `json:"dob"`
+	Salary string `json:"salary"`
+	Age    int    `json:"age"`
 }
 
 //client connection check
@@ -24,12 +25,12 @@ func main() {
 	err = json.Unmarshal(content, &person)
 	// json.Unmarshal Error
 	if err != nil {
-		fmt.Println(err)
+		log.Panic(err)
 	}
 	fmt.Println("Successfully Opened users.json", person)
 
 	req, err := http.NewRequest("POST", "http://localhost:8000/send", bytes.NewBuffer(content))
-	req.Header.Set("storage-type", "file")
+	req.Header.Set("fileType", "CSV")
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}

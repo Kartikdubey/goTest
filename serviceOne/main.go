@@ -5,7 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
+	"regexp"
 	"strconv"
 	"time"
 
@@ -19,10 +21,10 @@ var err, cerr error
 var cache *bigcache.BigCache
 
 type Person struct {
-	Name   string  `json:"name"`
-	Dob    string  `json:"dob"`
-	Salary float64 `json:"salary"`
-	Age    int     `json:"age"`
+	Name   string `json:"name"`
+	Dob    string `json:"dob"`
+	Salary string `json:"salary"`
+	Age    int    `json:"age"`
 }
 
 //getPerson to get all the data
@@ -47,6 +49,26 @@ func getPerson(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Response from db", persons)
 	json.NewEncoder(w).Encode(persons)
 }
+func validate(per Person) bool {
+	var ageCheck bool
+	if per.Age > 0 && per.Age < 110 {
+		ageCheck = true
+	}
+
+	dob := regexp.MustCompile("^([0]?[1-9]|[1|2][0-9]|[3][0|1])[./-]([0]?[1-9]|[1][0-2])[./-]([0-9]{4}|[0-9]{2})$")
+	name := regexp.MustCompile(`^[a-zA-Z]+$`)
+	//salary := regexp.MustCompile(`(?!0+(?:\\.0+)?$)[0-9]+(?:\\.[0-9]+)?`)
+	/*return (dob.MatchString(per.Dob) && name.MatchString(per.Name) && ageCheck)
+	&& salary.MatchString(per.Salary))
+	elliot := Person{
+		Name: "Elliot",
+		Age:  24}
+	_, err := proto.Marshal(&elliot)
+	if err != nil {
+		log.Fatal("marshaling error: ", err)
+	}*/
+	return (dob.MatchString(per.Dob) && name.MatchString(per.Name) && ageCheck)
+}
 
 //createPerson to add a new record in table
 func createPerson(w http.ResponseWriter, r *http.Request) {
@@ -57,16 +79,17 @@ func createPerson(w http.ResponseWriter, r *http.Request) {
 	}
 	var person Person
 	err = json.Unmarshal(body, &person)
-	sal := fmt.Sprintf("%f\n", person.Salary)
-	fmt.Println("salary----", sal)
-	// json.Unmarshal Error
+
+	// json.Unmarshal Error-Validate Types
+
 	if err != nil {
-		fmt.Println(err)
+		log.Panic(err)
 	}
-	fmt.Println(person)
-	fmt.Println("Request Came to server createPerson", string(body))
-	storageType := r.Header.Get("storage-type")
-	fmt.Println("heaader", storageType)
+
+	log.Println("Request Came to server createPerson", person)
+	fileType := r.Header.Get("fileType")
+	val := validate(person)
+	fmt.Println("heaader---val ", fileType, val)
 	fmt.Fprintf(w, "New person was created")
 }
 
