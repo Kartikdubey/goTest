@@ -103,6 +103,100 @@ func (x *Person) GetFiletype() string {
 	return ""
 }
 
+type Message struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Body string `protobuf:"bytes,1,opt,name=body,proto3" json:"body,omitempty"`
+}
+
+func (x *Message) Reset() {
+	*x = Message{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_clientserver_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Message) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Message) ProtoMessage() {}
+
+func (x *Message) ProtoReflect() protoreflect.Message {
+	mi := &file_clientserver_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Message.ProtoReflect.Descriptor instead.
+func (*Message) Descriptor() ([]byte, []int) {
+	return file_clientserver_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *Message) GetBody() string {
+	if x != nil {
+		return x.Body
+	}
+	return ""
+}
+
+type File struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	File string `protobuf:"bytes,1,opt,name=file,proto3" json:"file,omitempty"`
+}
+
+func (x *File) Reset() {
+	*x = File{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_clientserver_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *File) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*File) ProtoMessage() {}
+
+func (x *File) ProtoReflect() protoreflect.Message {
+	mi := &file_clientserver_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use File.ProtoReflect.Descriptor instead.
+func (*File) Descriptor() ([]byte, []int) {
+	return file_clientserver_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *File) GetFile() string {
+	if x != nil {
+		return x.File
+	}
+	return ""
+}
+
 var File_clientserver_proto protoreflect.FileDescriptor
 
 var file_clientserver_proto_rawDesc = []byte{
@@ -115,14 +209,26 @@ var file_clientserver_proto_rawDesc = []byte{
 	0x79, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x73, 0x61, 0x6c, 0x61, 0x72, 0x79, 0x12,
 	0x10, 0x0a, 0x03, 0x61, 0x67, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x03, 0x61, 0x67,
 	0x65, 0x12, 0x1a, 0x0a, 0x08, 0x66, 0x69, 0x6c, 0x65, 0x74, 0x79, 0x70, 0x65, 0x18, 0x05, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x08, 0x66, 0x69, 0x6c, 0x65, 0x74, 0x79, 0x70, 0x65, 0x32, 0x50, 0x0a,
-	0x0a, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x4f, 0x6e, 0x65, 0x12, 0x42, 0x0a, 0x08, 0x53,
-	0x65, 0x6e, 0x64, 0x44, 0x61, 0x74, 0x61, 0x12, 0x19, 0x2e, 0x47, 0x52, 0x50, 0x43, 0x2e, 0x43,
+	0x01, 0x28, 0x09, 0x52, 0x08, 0x66, 0x69, 0x6c, 0x65, 0x74, 0x79, 0x70, 0x65, 0x22, 0x1d, 0x0a,
+	0x07, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x62, 0x6f, 0x64, 0x79,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x62, 0x6f, 0x64, 0x79, 0x22, 0x1a, 0x0a, 0x04,
+	0x46, 0x69, 0x6c, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x66, 0x69, 0x6c, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x04, 0x66, 0x69, 0x6c, 0x65, 0x32, 0xd3, 0x01, 0x0a, 0x0a, 0x73, 0x65, 0x72,
+	0x76, 0x69, 0x63, 0x65, 0x4f, 0x6e, 0x65, 0x12, 0x41, 0x0a, 0x08, 0x53, 0x65, 0x6e, 0x64, 0x44,
+	0x61, 0x74, 0x61, 0x12, 0x19, 0x2e, 0x47, 0x52, 0x50, 0x43, 0x2e, 0x43, 0x6c, 0x69, 0x65, 0x6e,
+	0x74, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x2e, 0x50, 0x65, 0x72, 0x73, 0x6f, 0x6e, 0x1a, 0x1a,
+	0x2e, 0x47, 0x52, 0x50, 0x43, 0x2e, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x53, 0x65, 0x72, 0x76,
+	0x65, 0x72, 0x2e, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x3d, 0x0a, 0x07, 0x47, 0x65,
+	0x74, 0x44, 0x61, 0x74, 0x61, 0x12, 0x17, 0x2e, 0x47, 0x52, 0x50, 0x43, 0x2e, 0x43, 0x6c, 0x69,
+	0x65, 0x6e, 0x74, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x2e, 0x46, 0x69, 0x6c, 0x65, 0x1a, 0x19,
+	0x2e, 0x47, 0x52, 0x50, 0x43, 0x2e, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x53, 0x65, 0x72, 0x76,
+	0x65, 0x72, 0x2e, 0x50, 0x65, 0x72, 0x73, 0x6f, 0x6e, 0x12, 0x43, 0x0a, 0x0a, 0x55, 0x70, 0x64,
+	0x61, 0x74, 0x65, 0x44, 0x61, 0x74, 0x61, 0x12, 0x19, 0x2e, 0x47, 0x52, 0x50, 0x43, 0x2e, 0x43,
 	0x6c, 0x69, 0x65, 0x6e, 0x74, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x2e, 0x50, 0x65, 0x72, 0x73,
-	0x6f, 0x6e, 0x1a, 0x19, 0x2e, 0x47, 0x52, 0x50, 0x43, 0x2e, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74,
-	0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x2e, 0x50, 0x65, 0x72, 0x73, 0x6f, 0x6e, 0x22, 0x00, 0x42,
-	0x11, 0x5a, 0x0f, 0x2e, 0x2f, 0x3b, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x73, 0x65, 0x72, 0x76,
-	0x65, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6f, 0x6e, 0x1a, 0x1a, 0x2e, 0x47, 0x52, 0x50, 0x43, 0x2e, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74,
+	0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x2e, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x42, 0x11,
+	0x5a, 0x0f, 0x2e, 0x2f, 0x3b, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x73, 0x65, 0x72, 0x76, 0x65,
+	0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -137,15 +243,21 @@ func file_clientserver_proto_rawDescGZIP() []byte {
 	return file_clientserver_proto_rawDescData
 }
 
-var file_clientserver_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_clientserver_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_clientserver_proto_goTypes = []interface{}{
-	(*Person)(nil), // 0: GRPC.ClientServer.Person
+	(*Person)(nil),  // 0: GRPC.ClientServer.Person
+	(*Message)(nil), // 1: GRPC.ClientServer.Message
+	(*File)(nil),    // 2: GRPC.ClientServer.File
 }
 var file_clientserver_proto_depIdxs = []int32{
 	0, // 0: GRPC.ClientServer.serviceOne.SendData:input_type -> GRPC.ClientServer.Person
-	0, // 1: GRPC.ClientServer.serviceOne.SendData:output_type -> GRPC.ClientServer.Person
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
+	2, // 1: GRPC.ClientServer.serviceOne.GetData:input_type -> GRPC.ClientServer.File
+	0, // 2: GRPC.ClientServer.serviceOne.UpdateData:input_type -> GRPC.ClientServer.Person
+	1, // 3: GRPC.ClientServer.serviceOne.SendData:output_type -> GRPC.ClientServer.Message
+	0, // 4: GRPC.ClientServer.serviceOne.GetData:output_type -> GRPC.ClientServer.Person
+	1, // 5: GRPC.ClientServer.serviceOne.UpdateData:output_type -> GRPC.ClientServer.Message
+	3, // [3:6] is the sub-list for method output_type
+	0, // [0:3] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -169,6 +281,30 @@ func file_clientserver_proto_init() {
 				return nil
 			}
 		}
+		file_clientserver_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Message); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_clientserver_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*File); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -176,7 +312,7 @@ func file_clientserver_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_clientserver_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -202,7 +338,9 @@ const _ = grpc.SupportPackageIsVersion6
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type ServiceOneClient interface {
-	SendData(ctx context.Context, in *Person, opts ...grpc.CallOption) (*Person, error)
+	SendData(ctx context.Context, in *Person, opts ...grpc.CallOption) (*Message, error)
+	GetData(ctx context.Context, in *File, opts ...grpc.CallOption) (*Person, error)
+	UpdateData(ctx context.Context, in *Person, opts ...grpc.CallOption) (*Message, error)
 }
 
 type serviceOneClient struct {
@@ -213,9 +351,27 @@ func NewServiceOneClient(cc grpc.ClientConnInterface) ServiceOneClient {
 	return &serviceOneClient{cc}
 }
 
-func (c *serviceOneClient) SendData(ctx context.Context, in *Person, opts ...grpc.CallOption) (*Person, error) {
-	out := new(Person)
+func (c *serviceOneClient) SendData(ctx context.Context, in *Person, opts ...grpc.CallOption) (*Message, error) {
+	out := new(Message)
 	err := c.cc.Invoke(ctx, "/GRPC.ClientServer.serviceOne/SendData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceOneClient) GetData(ctx context.Context, in *File, opts ...grpc.CallOption) (*Person, error) {
+	out := new(Person)
+	err := c.cc.Invoke(ctx, "/GRPC.ClientServer.serviceOne/GetData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceOneClient) UpdateData(ctx context.Context, in *Person, opts ...grpc.CallOption) (*Message, error) {
+	out := new(Message)
+	err := c.cc.Invoke(ctx, "/GRPC.ClientServer.serviceOne/UpdateData", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -224,15 +380,23 @@ func (c *serviceOneClient) SendData(ctx context.Context, in *Person, opts ...grp
 
 // ServiceOneServer is the server API for ServiceOne service.
 type ServiceOneServer interface {
-	SendData(context.Context, *Person) (*Person, error)
+	SendData(context.Context, *Person) (*Message, error)
+	GetData(context.Context, *File) (*Person, error)
+	UpdateData(context.Context, *Person) (*Message, error)
 }
 
 // UnimplementedServiceOneServer can be embedded to have forward compatible implementations.
 type UnimplementedServiceOneServer struct {
 }
 
-func (*UnimplementedServiceOneServer) SendData(context.Context, *Person) (*Person, error) {
+func (*UnimplementedServiceOneServer) SendData(context.Context, *Person) (*Message, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendData not implemented")
+}
+func (*UnimplementedServiceOneServer) GetData(context.Context, *File) (*Person, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetData not implemented")
+}
+func (*UnimplementedServiceOneServer) UpdateData(context.Context, *Person) (*Message, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateData not implemented")
 }
 
 func RegisterServiceOneServer(s *grpc.Server, srv ServiceOneServer) {
@@ -257,6 +421,42 @@ func _ServiceOne_SendData_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ServiceOne_GetData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(File)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceOneServer).GetData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/GRPC.ClientServer.serviceOne/GetData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceOneServer).GetData(ctx, req.(*File))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceOne_UpdateData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Person)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceOneServer).UpdateData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/GRPC.ClientServer.serviceOne/UpdateData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceOneServer).UpdateData(ctx, req.(*Person))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _ServiceOne_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "GRPC.ClientServer.serviceOne",
 	HandlerType: (*ServiceOneServer)(nil),
@@ -264,6 +464,14 @@ var _ServiceOne_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SendData",
 			Handler:    _ServiceOne_SendData_Handler,
+		},
+		{
+			MethodName: "GetData",
+			Handler:    _ServiceOne_GetData_Handler,
+		},
+		{
+			MethodName: "UpdateData",
+			Handler:    _ServiceOne_UpdateData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

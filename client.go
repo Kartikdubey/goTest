@@ -33,7 +33,7 @@ func main() {
 	req.Header.Set("fileType", "XML")
 	req.Header.Set("Content-Type", "application/json")
 
-	client := &http.Client{}
+	/*client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
 		panic(err)
@@ -42,11 +42,12 @@ func main() {
 
 	fmt.Println("response Status:", resp.Status)
 	fmt.Println("response Headers:", resp.Header)
-	/* response, err := http.Get("http://localhost:" + appPort + "/get")
+	*/
+	response, err := http.Get("http://localhost:8000/get")
 	if err != nil {
 		fmt.Println("HTTP req failed with error", err)
 	} else {
 		data, _ := ioutil.ReadAll(response.Body)
 		fmt.Println(string(data))
-	}*/
+	}
 }

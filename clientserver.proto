@@ -11,6 +11,15 @@ message Person {
       string filetype=5;
 }
 
+message Message {
+      string body = 1;
+    }
+message File{
+      string file =1;
+}
+
 service serviceOne {
-      rpc SendData(Person) returns (Person) {}
+      rpc SendData(Person) returns (Message);
+      rpc GetData(File) returns (Person);
+      rpc UpdateData(Person) returns (Message);
     }
