@@ -7,6 +7,10 @@
 package clientserver
 
 import (
+	context "context"
+	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -111,9 +115,14 @@ var file_clientserver_proto_rawDesc = []byte{
 	0x79, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x73, 0x61, 0x6c, 0x61, 0x72, 0x79, 0x12,
 	0x10, 0x0a, 0x03, 0x61, 0x67, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x03, 0x61, 0x67,
 	0x65, 0x12, 0x1a, 0x0a, 0x08, 0x66, 0x69, 0x6c, 0x65, 0x74, 0x79, 0x70, 0x65, 0x18, 0x05, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x08, 0x66, 0x69, 0x6c, 0x65, 0x74, 0x79, 0x70, 0x65, 0x42, 0x11, 0x5a,
-	0x0f, 0x2e, 0x2f, 0x3b, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x01, 0x28, 0x09, 0x52, 0x08, 0x66, 0x69, 0x6c, 0x65, 0x74, 0x79, 0x70, 0x65, 0x32, 0x50, 0x0a,
+	0x0a, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x4f, 0x6e, 0x65, 0x12, 0x42, 0x0a, 0x08, 0x53,
+	0x65, 0x6e, 0x64, 0x44, 0x61, 0x74, 0x61, 0x12, 0x19, 0x2e, 0x47, 0x52, 0x50, 0x43, 0x2e, 0x43,
+	0x6c, 0x69, 0x65, 0x6e, 0x74, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x2e, 0x50, 0x65, 0x72, 0x73,
+	0x6f, 0x6e, 0x1a, 0x19, 0x2e, 0x47, 0x52, 0x50, 0x43, 0x2e, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74,
+	0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x2e, 0x50, 0x65, 0x72, 0x73, 0x6f, 0x6e, 0x22, 0x00, 0x42,
+	0x11, 0x5a, 0x0f, 0x2e, 0x2f, 0x3b, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x73, 0x65, 0x72, 0x76,
+	0x65, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -133,8 +142,10 @@ var file_clientserver_proto_goTypes = []interface{}{
 	(*Person)(nil), // 0: GRPC.ClientServer.Person
 }
 var file_clientserver_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
+	0, // 0: GRPC.ClientServer.serviceOne.SendData:input_type -> GRPC.ClientServer.Person
+	0, // 1: GRPC.ClientServer.serviceOne.SendData:output_type -> GRPC.ClientServer.Person
+	1, // [1:2] is the sub-list for method output_type
+	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -167,7 +178,7 @@ func file_clientserver_proto_init() {
 			NumEnums:      0,
 			NumMessages:   1,
 			NumExtensions: 0,
-			NumServices:   0,
+			NumServices:   1,
 		},
 		GoTypes:           file_clientserver_proto_goTypes,
 		DependencyIndexes: file_clientserver_proto_depIdxs,
@@ -177,4 +188,84 @@ func file_clientserver_proto_init() {
 	file_clientserver_proto_rawDesc = nil
 	file_clientserver_proto_goTypes = nil
 	file_clientserver_proto_depIdxs = nil
+}
+
+// Reference imports to suppress errors if they are not otherwise used.
+var _ context.Context
+var _ grpc.ClientConnInterface
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion6
+
+// ServiceOneClient is the client API for ServiceOne service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type ServiceOneClient interface {
+	SendData(ctx context.Context, in *Person, opts ...grpc.CallOption) (*Person, error)
+}
+
+type serviceOneClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewServiceOneClient(cc grpc.ClientConnInterface) ServiceOneClient {
+	return &serviceOneClient{cc}
+}
+
+func (c *serviceOneClient) SendData(ctx context.Context, in *Person, opts ...grpc.CallOption) (*Person, error) {
+	out := new(Person)
+	err := c.cc.Invoke(ctx, "/GRPC.ClientServer.serviceOne/SendData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// ServiceOneServer is the server API for ServiceOne service.
+type ServiceOneServer interface {
+	SendData(context.Context, *Person) (*Person, error)
+}
+
+// UnimplementedServiceOneServer can be embedded to have forward compatible implementations.
+type UnimplementedServiceOneServer struct {
+}
+
+func (*UnimplementedServiceOneServer) SendData(context.Context, *Person) (*Person, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendData not implemented")
+}
+
+func RegisterServiceOneServer(s *grpc.Server, srv ServiceOneServer) {
+	s.RegisterService(&_ServiceOne_serviceDesc, srv)
+}
+
+func _ServiceOne_SendData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Person)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceOneServer).SendData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/GRPC.ClientServer.serviceOne/SendData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceOneServer).SendData(ctx, req.(*Person))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _ServiceOne_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "GRPC.ClientServer.serviceOne",
+	HandlerType: (*ServiceOneServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "SendData",
+			Handler:    _ServiceOne_SendData_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "clientserver.proto",
 }

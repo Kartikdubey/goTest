@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"database/sql"
 	"encoding/json"
 	"fmt"
@@ -8,12 +9,13 @@ import (
 	"log"
 	"net/http"
 	"regexp"
-	"strconv"
 	"time"
 
+	"github.com/Kartikdubey/goTest/clientserver"
 	"github.com/allegro/bigcache"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
+	"google.golang.org/grpc"
 )
 
 var db *sql.DB
@@ -24,7 +26,7 @@ type Person struct {
 	Name   string `json:"name"`
 	Dob    string `json:"dob"`
 	Salary string `json:"salary"`
-	Age    int    `json:"age"`
+	Age    int32  `json:"age"`
 }
 
 //getPerson to get all the data
@@ -91,6 +93,22 @@ func createPerson(w http.ResponseWriter, r *http.Request) {
 	val := validate(person)
 	fmt.Println("heaader---val ", fileType, val)
 	fmt.Fprintf(w, "New person was created")
+
+	var conn *grpc.ClientConn
+	conn, err = grpc.Dial(":9000", grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("did not connect: %s", err)
+	}
+	defer conn.Close()
+
+	c := clientserver.NewServiceOneClient(conn)
+
+	per := &clientserver.Person{Name: person.Name, Age: person.Age, Dob: person.Dob, Salary: person.Salary, Filetype: fileType}
+	response, err := c.SendData(context.Background(), per)
+	if err != nil {
+		log.Fatalf("Error when calling SayHello: %s", err)
+	}
+	log.Printf("Response from server: %s", response.Name)
 }
 
 //getSpecificPersons to get a particular row from table
@@ -139,7 +157,7 @@ func updatePerson(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Person with Name = %s was updated", params["name"])
 }
 
-//deletePerson to delete record
+/*deletePerson to delete record
 func deletePerson(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Println("DELETE HIT")
@@ -166,7 +184,7 @@ func deletePerson(w http.ResponseWriter, r *http.Request) {
 		panic(err.Error())
 	}
 	fmt.Fprintf(w, "Person with name = %s was deleted", params["name"])
-}
+}*/
 
 //getCachePerson to get values from cache
 func getCachePersons(w http.ResponseWriter, r *http.Request) {
@@ -195,7 +213,7 @@ func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/get", getPerson).Methods("GET")
 	router.HandleFunc("/send", createPerson).Methods("POST")
-	router.HandleFunc("/delete/{name}", deletePerson).Methods("DELETE")
+	//router.HandleFunc("/delete/{name}", deletePerson).Methods("DELETE")
 	router.HandleFunc("/update/{name}", updatePerson).Methods("PUT")
 	router.HandleFunc("/get/{age}", getSpecificPersons).Methods("GET")
 	router.HandleFunc("/getcache/{age}", getCachePersons).Methods("GET")
