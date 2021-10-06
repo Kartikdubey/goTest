@@ -9,8 +9,8 @@ import (
 	"log"
 	"net/http"
 	"regexp"
-	"time"
 
+	//s"github.com/Kartikdubey/goTest/clientserver"
 	"github.com/Kartikdubey/goTest/clientserver"
 	"github.com/allegro/bigcache"
 	_ "github.com/go-sql-driver/mysql"
@@ -30,7 +30,7 @@ type Person struct {
 }
 
 //getPerson to get all the data
-//from a table "Persons" in database "testdb"
+/*from FILE
 func getPerson(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Println("GET HIT")
@@ -50,7 +50,7 @@ func getPerson(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Println("Response from db", persons)
 	json.NewEncoder(w).Encode(persons)
-}
+}*/
 func validate(per Person) bool {
 	var ageCheck bool
 	if per.Age > 0 && per.Age < 110 {
@@ -72,7 +72,7 @@ func validate(per Person) bool {
 	return (dob.MatchString(per.Dob) && name.MatchString(per.Name) && ageCheck)
 }
 
-//createPerson to add a new record in table
+//createPerson to add a new record in CSV OR XML FILE
 func createPerson(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("CREATE HIT")
 	body, err := ioutil.ReadAll(r.Body)
@@ -111,7 +111,7 @@ func createPerson(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Response from server: %s", response.Name)
 }
 
-//getSpecificPersons to get a particular row from table
+/*getSpecificPersons to get a particular row from table
 func getSpecificPersons(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Println("Get Specific HIT")
@@ -133,7 +133,7 @@ func getSpecificPersons(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(pers)
 }
 
-//updatePerson to add a record in table
+/*updatePerson to add a record in FILE
 func updatePerson(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Println("Update HIT")
@@ -186,37 +186,17 @@ func deletePerson(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Person with name = %s was deleted", params["name"])
 }*/
 
-//getCachePerson to get values from cache
-func getCachePersons(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	fmt.Println("Get Cache HIT")
-	params := mux.Vars(r)
-	var cachedata string
-	if entry, err := cache.Get(params["age"]); err == nil {
-		cachedata = string(entry)
-		fmt.Println(cachedata)
-	}
-	fmt.Fprintf(w, "Person with age = %s was deleted.His Name retrieved from cache memory=%s", params["age"], cachedata)
-}
 func main() {
 	fmt.Println("Main Started")
-	db, err = sql.Open("mysql", "root:admin@tcp(127.0.0.1:3306)/testdb")
-	if err != nil {
-		panic(err.Error())
-	}
-	cache, cerr = bigcache.NewBigCache(bigcache.DefaultConfig(10 * time.Minute))
-	if cerr != nil {
-		panic(err.Error())
-	}
 
 	defer db.Close()
 	router := mux.NewRouter()
-	router.HandleFunc("/get", getPerson).Methods("GET")
+	//router.HandleFunc("/get", getPerson).Methods("GET")
 	router.HandleFunc("/send", createPerson).Methods("POST")
 	//router.HandleFunc("/delete/{name}", deletePerson).Methods("DELETE")
-	router.HandleFunc("/update/{name}", updatePerson).Methods("PUT")
-	router.HandleFunc("/get/{age}", getSpecificPersons).Methods("GET")
-	router.HandleFunc("/getcache/{age}", getCachePersons).Methods("GET")
+	//router.HandleFunc("/update/{name}", updatePerson).Methods("PUT")
+	//router.HandleFunc("/get/{age}", getSpecificPersons).Methods("GET")
+
 	http.ListenAndServe(":8000", router)
 
 }

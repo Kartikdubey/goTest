@@ -30,7 +30,7 @@ func main() {
 	fmt.Println("Successfully Opened users.json", person)
 
 	req, err := http.NewRequest("POST", "http://localhost:8000/send", bytes.NewBuffer(content))
-	req.Header.Set("fileType", "CSV")
+	req.Header.Set("fileType", "XML")
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
